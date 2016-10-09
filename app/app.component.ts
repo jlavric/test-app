@@ -10,12 +10,14 @@ import {SignUpFormComponent} from './signup-form.component';
 import {PostService} from './post.service';
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {OnInit} from 'angular2/core';
+import {GitHubProfileComponent} from './github-profile.component';
 
 @Component({
     selector: 'my-app',
     //template pišeš inline če je majhen in je tako componenta samozadostna, če je velik pa je to seveda slaba praksa in je bolje imeti ločen fajl
     //seveda pa to zahteva dodaten url request, seveda samo prvič, potem pa gre v cache
     template: `
+     <github-profile></github-profile>   
      <div *ngIf="isLoading">
         <i class="fa fa-spinner fa-spin fa-3x"></i>
      </div>
@@ -40,7 +42,7 @@ import {OnInit} from 'angular2/core';
         Some really strange settings like number of spaces
         </zippy>   
      `,
-    directives: [FavoriteComponent, LikeComponent, VoteComponent, TweetsComponent, ZippyComponent, ContactFormComponent,SubscribeFormComponent, SignUpFormComponent],
+    directives: [FavoriteComponent, LikeComponent, VoteComponent, TweetsComponent, ZippyComponent, ContactFormComponent,SubscribeFormComponent, SignUpFormComponent, GitHubProfileComponent],
     providers: [PostService,HTTP_PROVIDERS]
 })
 
