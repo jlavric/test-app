@@ -1,0 +1,61 @@
+<form #f = "ngForm" (ngSubmit) = "onSubscribe(f.form)">
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input 
+            ngControl="name" 
+            #name="ngForm" 
+            required 
+            minlength="3"
+            id="name"
+            type="text"
+            class="form-control">
+            
+            <div *ngIf="name.touched && name.errors">
+                <div *ngIf="name.errors.required" class="alert alert-danger">
+                    Name is required.
+                </div>
+                <div *ngIf="name.errors.minlength" class="alert alert-danger">
+                    Name should be {{name.errors.minlength.requiredLength}} characters long.
+                </div>
+            </div>
+        
+        <label for="email">Email</label>
+        <input 
+            type="text" 
+            ngControl="email" 
+            #email="ngForm" 
+            required 
+            minlength="3"
+            id="email"
+            class="form-control">   
+       
+        <div *ngIf="email.touched && email.errors">
+                <div *ngIf="email.errors.required" class="alert alert-danger">
+                    Email is required.
+                </div>
+                <div *ngIf="email.errors.minlength" class="alert alert-danger">
+                    Email should be {{email.errors.minlength.requiredLength}} characters long.
+                </div>
+        </div>
+
+        <label for="frequency">Frequency of emails</label>
+        <select 
+            ngControl="frequency" 
+            #frequency="ngForm" 
+            required 
+            id="frequency"
+            class="form-control">
+                <option></option>
+                <option *ngFor="#frequency of frequencies" value="{{frequency.id}}">
+                    {{frequency.label}}
+                </option>
+            </select> 
+        <div *ngIf="frequency.touched && !frequency.valid" class="alert alert-danger">
+                
+                    Frequency should be set.
+               
+        </div>               
+            
+            <button class="btn btn-primary" type="submit" [disabled]="!f.valid" >Subscribe</button>
+    </div>
+</form>

@@ -1,0 +1,16 @@
+<ul>
+  <div *ngFor="#tweet of tweets, #i = index">
+    <div class="media">
+      <div class="media-left">
+        <a href="#">
+          <img class="media-object" src="http://lorempixel.com/20/20/people/?{{tweet.cnt}}" alt="...">
+        </a>
+      </div>
+      <div class="media-body">
+        <h4 class="media-heading">{{i+1 | currency: 'EUR':true:2.3}} {{tweet.title | uppercase | lowercase}}<b>{{tweet.user}}</b></h4>
+        {{tweet.desc}}
+      </div>
+    </div>
+    {{tweet | json}}
+  </div>
+</ul>
