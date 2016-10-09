@@ -7,12 +7,18 @@ import {ZippyComponent} from './zippy.component';
 import {ContactFormComponent} from './contact-form.component';
 import {SubscribeFormComponent} from './subscribe-form.component';
 import {SignUpFormComponent} from './signup-form.component';
+import {PostService} from './post.service';
+import {HTTP_PROVIDERS} from 'angular2/http';
+import {OnInit} from 'angular2/core';
 
 @Component({
     selector: 'my-app',
     //template pišeš inline če je majhen in je tako componenta samozadostna, če je velik pa je to seveda slaba praksa in je bolje imeti ločen fajl
     //seveda pa to zahteva dodaten url request, seveda samo prvič, potem pa gre v cache
     template: `
+     <div *ngIf="isLoading">
+        <i class="fa fa-spinner fa-spin fa-3x"></i>
+     </div>
      <div class="panel panel-heading"><signup-form></signup-form></div>
      <div class="panel panel-heading"><subscribe-form></subscribe-form></div>
      <div class="bg-warning"><contact-form></contact-form></div>
@@ -34,10 +40,11 @@ import {SignUpFormComponent} from './signup-form.component';
         Some really strange settings like number of spaces
         </zippy>   
      `,
-    directives: [FavoriteComponent, LikeComponent, VoteComponent, TweetsComponent, ZippyComponent, ContactFormComponent,SubscribeFormComponent, SignUpFormComponent]
+    directives: [FavoriteComponent, LikeComponent, VoteComponent, TweetsComponent, ZippyComponent, ContactFormComponent,SubscribeFormComponent, SignUpFormComponent],
+    providers: [PostService,HTTP_PROVIDERS]
 })
 
-export class AppComponent { 
+export class AppComponent implements OnInit { 
     post = {
         title: "Title",
         isFavoriteP: true,
@@ -52,4 +59,20 @@ export class AppComponent {
     onVote($event){
         console.log($event);
     }
+
+    constructor(private _postService: PostService){
+        //this._postService.createPost({userId:1, title:"a", body:"b"})
+    }
+
+    // after the constructor
+    ngOnInit(){
+        this._postService.getPosts()
+            .subscribe(posts => {
+                this.isLoading = false;
+                console.log(posts[0].title);
+            });
+    }
+
+    isLoading = true;
+
 } 
